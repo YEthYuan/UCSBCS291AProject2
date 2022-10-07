@@ -3,7 +3,6 @@
 require 'json'
 require 'jwt'
 require 'pp'
-require 'logger'
 
 def main(event:, context:)
   # event: Hash
@@ -14,8 +13,7 @@ def main(event:, context:)
 
   #################   ----- Debug -----   #################
 
-  logger = Logger.new('project2.log')
-  logger.debug("Event: \n#{event}")
+  PP.pp "Event: \n#{event}"
 
   #################   ----- Legitimacy Check -----   #################
 
