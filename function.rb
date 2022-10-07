@@ -13,7 +13,7 @@ def main(event:, context:)
 
   #################   ----- Debug -----   #################
 
-  PP.pp "Event: \n#{event}"
+  # PP.pp "Event: \n#{event}"
 
   #################   ----- Legitimacy Check -----   #################
 
