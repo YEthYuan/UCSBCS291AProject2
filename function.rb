@@ -43,21 +43,23 @@ def main(event:, context:)
         return response(status: 403)
       end
       token = auth[7..-1]
-      # begin
+      begin
         decoded_token = JWT.decode token, ENV['JWT_SECRET'], true, { algorithm: 'HS256' }
         # puts "decoded: #{decoded_token.class}\n #{decoded_token}"
         payload = decoded_token[0]['data']
         return response(body: payload, status: 200)
-      # rescue# JWT::ExpiredSignature, JWT::ImmatureSignature, JWT::InvalidIssuerError
+      rescue JWT::VerificationError, JWT::IncorrectAlgorithm
+        return response(status: 403)
+      rescue# JWT::ExpiredSignature, JWT::ImmatureSignature, JWT::InvalidIssuerError
         # Responds 401 if either the token is not yet valid, or if it is expired.
-        puts " ========== DEBUG ==========="
-        PP.pp "keys = #{event['headers'].keys}"
-        PP.pp "auth = #{auth}"
-        PP.pp "token = #{token}"
-        PP.pp "decoded_token = #{decoded_token}"
-        PP.pp "payload = #{payload}"
+        # puts " ========== DEBUG ==========="
+        # PP.pp "keys = #{event['headers'].keys}"
+        # PP.pp "auth = #{auth}"
+        # PP.pp "token = #{token}"
+        # PP.pp "decoded_token = #{decoded_token}"
+        # PP.pp "payload = #{payload}"
         return response(status: 401)
-      # end
+      end
     else
       # Requests to any other resources must respond with status code 404.
       return response(status: 404)
