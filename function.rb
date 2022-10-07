@@ -32,9 +32,6 @@ def main(event:, context:)
   #################   ----- Main -----   #################
   if event['httpMethod'] == 'GET' then
     if event['path'] == '/' then
-      if !event['headers'].keys.include?('Authorization') then
-        return response(status: 403)
-      end
       begin
         auth = event['headers']['Authorization']
       rescue
@@ -53,7 +50,8 @@ def main(event:, context:)
         return response(body: payload, status: 200)
       rescue# JWT::ExpiredSignature, JWT::ImmatureSignature, JWT::InvalidIssuerError
         # Responds 401 if either the token is not yet valid, or if it is expired.
-        return response(status: 401)
+        # return response(status: 401)
+        return response(status: decoded_token.to_json)
       end
     else
       # Requests to any other resources must respond with status code 404.
