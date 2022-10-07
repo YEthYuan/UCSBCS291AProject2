@@ -60,7 +60,8 @@ def main(event:, context:)
     if event['path'] == '/token' then
       # Responds 415 if the request content type is not application/json.
       if event['headers']['Content-Type'] != 'application/json' then
-        return response(status: 415)
+        # return response(status: 415)
+        return response(status: 444)
       end
       begin
         bodyData = JSON.parse(event['body'])  # Body: Hash
