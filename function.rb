@@ -11,6 +11,10 @@ def main(event:, context:)
   # https://docs.aws.amazon.com/lambda/latest/dg/ruby-context.html
 
 
+  #################   ----- Debug -----   #################
+
+  PP.pp "Event: \n#{event}"
+
   #################   ----- Legitimacy Check -----   #################
 
   # Requests to any other resources must respond with status code 404.
