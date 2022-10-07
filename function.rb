@@ -32,6 +32,9 @@ def main(event:, context:)
   #################   ----- Main -----   #################
   if event['httpMethod'] == 'GET' then
     if event['path'] == '/' then
+      if !event['headers'].keys.include?('Authorization') then
+        return response(status: 403)
+      end
       begin
         auth = event['headers']['Authorization']
       rescue
