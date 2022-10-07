@@ -50,7 +50,11 @@ def main(event:, context:)
         return response(body: payload, status: 200)
       rescue# JWT::ExpiredSignature, JWT::ImmatureSignature, JWT::InvalidIssuerError
         # Responds 401 if either the token is not yet valid, or if it is expired.
-        PP.pp decoded_token.to_json
+        puts " ========== DEBUG ==========="
+        PP.pp "auth = #{auth}"
+        PP.pp "token = #{token}"
+        PP.pp "decoded_token = #{decoded_token}"
+        PP.pp "payload = #{payload}"
         return response(status: 401)
       end
     else
