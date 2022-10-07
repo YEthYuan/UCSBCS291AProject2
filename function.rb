@@ -39,7 +39,7 @@ def main(event:, context:)
         return response(status: 403)
       end
       # Responds 403 if a proper Authorization: Bearer <TOKEN> header is not provided.
-      if !(auth =~ /Bearer \S+/) then
+      if !(auth =~ /\ABearer \S+/) then
         return response(status: 403)
       end
       token = auth[7..-1]
